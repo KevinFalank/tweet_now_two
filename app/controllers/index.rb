@@ -23,13 +23,19 @@ get '/auth' do
   User.create(username: @access_token.params[:screen_name], oauth_token: @access_token.token, oauth_secret: @access_token.secret)
 
 
+  erb :tweet_view
+
+end
+
+
+post '/tweets' do
+  user = User.last
+
   Twitter.configure do |config|
-    config.oauth_token       = @access_token.token
-    config.oauth_token_secret = @access_token.secret
+    config.oauth_token       = user.oauth_token
+    config.oauth_token_secret = user.oauth_secret
   end
 
-  Twitter.update("This is another test.")
-
-  erb :index
+  Twitter.update(params[:tweet])
 
 end

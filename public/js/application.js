@@ -1,7 +1,18 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+
+  $("#tweet_single").submit(function(e){
+    e.preventDefault();
+    console.log("I made it here");
+    alert( "calling AJAX" );
+    var data = $( this ).serialize();
+    // alert(data);
+    $.post( "/tweets", data, function() {
+      alert( "success" );
+    })
+      .fail(function() {
+        alert( "error" );
+      });
+  });
+
 });
